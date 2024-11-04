@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% set show_nav = false %}
+{% block title %}Anomaly Detection{% endblock %}
+{% block content %}
+<h1>Anomaly Detection Results</h1>
+
+<label for="sort_order">Sort by:</label>
+<select id="sort_order" onchange="sortTable()">
+    <option value="desc" selected>Descending</option>
+    <option value="asc">Ascending</option>
+</select>
+
+<table id="anomalyTable">
+    <thead>
+        <tr>
+            <th>Timestamp</th>
+            <th>Filename</th>
+            <th>Result</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for entry in anomaly_log %}
+            <tr>
+                <td>{{ entry.timestamp }}</td>
+                <td>{{ entry.filename }}</td>
+                <td>{{ entry.result }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script>
+    function sortTable() {
+        const table = document.getElementById("anomalyTable").getElementsByTagName("tbody")[0];
+        const rows = Array.from(table.rows);
+        const sortOrder = document.getElementById("sort_order").value;
+
+        rows.sort((a, b) => {
+            const dateA = new Date(a.cells[0].innerText);
+            const dateB = new Date(b.cells[0].innerText);
+            return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
+        });
+
+        // Clear existing rows and re-append in sorted order
+        while (table.firstChild) table.removeChild(table.firstChild);
+        rows.forEach(row => table.appendChild(row));
+    }
+</script>
+{% endblock %}

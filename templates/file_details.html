@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}File Details{% endblock %}
+{% block content %}
+<h2>File Details for {{ filename }}</h2>
+
+<!-- Display Conventional Hashes -->
+<div>
+    <h3>File Hash (Conventional)</h3>
+    <ul>
+        <li>MD5: {{ metadata.conventional_hashes['md5'] }}</li>
+        <li>SHA-1: {{ metadata.conventional_hashes['sha1'] }}</li>
+        <li>SHA-256: {{ metadata.conventional_hashes['sha256'] }}</li>
+        <li>SHA-512: {{ metadata.conventional_hashes['sha512'] }}</li>
+    </ul>
+</div>
+
+<!-- Display Page Hashes -->
+{% if metadata.page_hashes %}
+    <h3>Page Hashes (SHA-256)</h3>
+    <ul>
+        {% for page, hash in metadata.page_hashes.items() %}
+            <li>{{ page }}: {{ hash }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No page hashes available.</p>
+{% endif %}
+
+<!-- Display Blockchain Hash -->
+<div>
+    <h3>Blockchain Hash</h3>
+    <ul>
+        <li>{{ metadata.blockchain_hash }}</li>
+    </ul>
+</div>
+
+<!-- Display Additional Metadata (PDF properties) -->
+<h3>Metadata</h3>
+<ul>
+    {% if metadata.Producer %}
+        <li><strong>Producer:</strong> {{ metadata.Producer }}</li>
+    {% endif %}
+    {% if metadata.Creator %}
+        <li><strong>Creator:</strong> {{ metadata.Creator }}</li>
+    {% endif %}
+    {% if metadata.Author %}
+        <li><strong>Author:</strong> {{ metadata.Author }}</li>
+    {% endif %}
+    {% if metadata.Subject %}
+        <li><strong>Subject:</strong> {{ metadata.Subject }}</li>
+    {% endif %}
+    {% if metadata.Title %}
+        <li><strong>Title:</strong> {{ metadata.Title }}</li>
+    {% endif %}
+</ul>
+
+<!-- Display Page Content (if any) -->
+<h3>Page Content</h3>
+{% if metadata.PageContent %}
+    <div>
+        {% for page in metadata.PageContent %}
+            <h4>Page {{ page.PageNumber }}</h4>
+            <p>{{ page.Text | e }}</p>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>No text content found in pages.</p>
+{% endif %}
+
+{% endblock %}

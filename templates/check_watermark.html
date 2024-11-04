@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Check Watermark{% endblock %}
+{% block content %}
+<h2>Check Watermark in a New File</h2>
+<form method="POST" enctype="multipart/form-data" action="{{ url_for('check_watermark_action') }}">
+    <label for="file">Choose a file to check for a watermark:</label>
+    <input type="file" name="file" id="file" required>
+    <button type="submit">Check Watermark</button>
+</form>
+
+{% if watermark_result %}
+    <div class="result">
+        <h3>Watermark Check Result:</h3>
+        <p>{{ watermark_result }}</p>
+    </div>
+{% endif %}
+{% endblock %}
+

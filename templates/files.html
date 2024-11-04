@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Files{% endblock %}
+{% block content %}
+<h2>Processed Files</h2>
+<div class="mb-3">
+    <form method="GET" action="{{ url_for('files') }}">
+        <label for="sort_order">Sort Order:</label>
+        <select name="sort" id="sort_order" class="form-control" onchange="this.form.submit()">
+            <option value="asc" {% if sort_order == 'asc' %}selected{% endif %}>Ascending</option>
+            <option value="desc" {% if sort_order == 'desc' %}selected{% endif %}>Descending</option>
+        </select>
+    </form>
+</div>
+<table>
+    <tr>
+        <th>Timestamp</th>
+        <th>Filename</th>
+        <th>Hash SHA-256</th>
+        <th>Details</th>
+        <th>Watermarked</th>
+        <th>Actions</th>
+    </tr>
+    {% for file in files %}
+    <tr>
+        <td>{{ file.metadata.timestamp }}</td>
+        <td>{{ file.filename }}</td>
+        <td>{{ file.file_hash }}</td>
+        <td>
+            {% if file.filename.endswith('.pdf') %}
+                {% if file.page_hashes %}
+                    <a href="{{ url_for('file_details', filename=file.filename) }}">View Hashes</a>
+                {% else %}
+                    No Page Hashes
+                {% endif %}
+            {% else %}
+                <a href="{{ url_for('file_metadata', filename=file.filename) }}">Metadata</a>
+            {% endif %}
+        </td>
+        <td>{{ "Yes" if file.watermarked else "No" }}</td>
+        <td>
+            <a href="{{ url_for('download', filename=file.filename) }}">Download</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
+
+

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Activity Logs{% endblock %}
+{% block content %}
+<h2>Tracking Logs</h2>
+
+<!-- Dropdown untuk memilih ascending atau descending -->
+<div class="mb-3">
+    <form method="GET" action="{{ url_for('logs') }}">
+        <label for="sort_order">Sort Order:</label>
+        <select name="sort" id="sort_order" class="form-control" onchange="this.form.submit()">
+            <option value="asc" {% if sort_order == 'asc' %}selected{% endif %}>Ascending</option>
+            <option value="desc" {% if sort_order == 'desc' %}selected{% endif %}>Descending</option>
+        </select>
+    </form>
+</div>
+
+<!-- Tabel logs -->
+<table>
+    <thead>
+        <tr>
+            <th>Timestamp</th>
+            <th>Filename</th>
+            <th>IP Address</th>
+            <th>User</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for log in logs %}
+        <tr>
+            <td>{{ log.timestamp }}</td>
+            <td>{{ log.filename }}</td>
+            <td>{{ log.ip_address }}</td>
+            <td>{{ log.user }}</td>
+            <td>{{ log.action }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{{ pagination.links }}
+{% endblock %}

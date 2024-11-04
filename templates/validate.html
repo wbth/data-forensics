@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Validate File{% endblock %}
+{% block content %}
+<h2>File Validation</h2>
+
+<!-- Form untuk upload file -->
+<form action="{{ url_for('validate_file_action') }}" method="POST" enctype="multipart/form-data">
+    <label for="file">Upload a file to validate:</label>
+    <input type="file" name="file" id="file" required>
+    <button type="submit">Upload</button>
+</form>
+
+<!-- Bagian untuk memilih file pembanding setelah upload berhasil -->
+{% if processed_files %}
+    <h3>Select a Processed File for Comparison</h3>
+    <form action="{{ url_for('compare_file') }}" method="POST">
+        <!-- Simpan path dari file yang baru diunggah -->
+        <input type="hidden" name="uploaded_file" value="{{ uploaded_file }}">
+
+        <label for="selected_file">Choose a file to compare with:</label>
+        <select name="selected_file" id="selected_file" required>
+            {% for processed_file in processed_files %}
+                <option value="{{ processed_file|replace('.json', '') }}">{{ processed_file|replace('.json', '') }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Compare</button>
+    </form>
+{% endif %}
+
+<!-- Tampilkan hasil validasi jika ada -->
+{% if validation_result %}
+    <h3>Validation Results</h3>
+    <ul>
+        {% for result in validation_result %}
+            <li>{{ result }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% endblock %}
+

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% set show_nav = false %}
+{% block title %}Blockchain Visualization{% endblock %}
+{% block content %}
+<h2>Blockchain Visualization</h2>
+<div class="blockchain-container" id="blockchain"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"></script>
+<script src="https://d3js.org/d3.v6.min.js"></script>
+<script>
+    const socket = io.connect('http://' + document.domain + ':' + location.port);
+
+    // Function to create a block element
+    function createBlock(blockData) {
+        const block = document.createElement('div');
+        block.className = 'block';
+        block.innerHTML = `
+            <div class="index">Block ${blockData.index}</div>
+            <div>Timestamp: ${new Date(blockData.timestamp * 1000).toLocaleString()}</div>
+            <div>Transactions: ${blockData.transactions.map(tx => tx.file_hash).join(', ')}</div>
+            <div>Proof: ${blockData.proof}</div>
+            <div>Previous Hash: ${blockData.previous_hash}</div>
+        `;
+        return block;
+    }
+
+    // Function to render the entire blockchain
+    function renderBlockchain(blockchain) {
+        const container = document.getElementById('blockchain');
+        container.innerHTML = '';
+        blockchain.forEach(block => {
+            const blockElement = createBlock(block);
+            container.appendChild(blockElement);
+        });
+    }
+
+    // Initial rendering of blockchain
+    fetch('/blockchain')
+        .then(response => response.json())
+        .then(data => renderBlockchain(data.blockchain));
+
+    // Listen for new blocks from the server
+    socket.on('new_block', function(blockData) {
+        const container = document.getElementById('blockchain');
+        const blockElement = createBlock(blockData);
+        container.appendChild(blockElement);
+    });
+</script>
+{% endblock %}

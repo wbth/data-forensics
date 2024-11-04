@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Reset System{% endblock %}
+{% block content %}
+<h1>Reset System</h1>
+<p>Are you sure you want to reset the system? This action will delete all uploaded files, processed files, and logs. This action cannot be undone.</p>
+
+<form method="POST">
+    <button type="submit" name="confirm_reset" value="yes">Yes, Reset All Data</button>
+    <button type="submit" name="confirm_reset" value="no">Cancel</button>
+</form>
+<form method="POST">
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}File Details{% endblock %}
+{% block content %}
+<h2>Metadata for {{ filename }}</h2>
+
+<ul>
+    {% for key, value in metadata.items() %}
+    {% if key != 'file_hash' and key != 'timestamp' %}
+    <li><strong>{{ key }}:</strong> {{ value }}</li>
+    {% endif %}
+    {% endfor %}
+</ul>
+
+{% endblock %}

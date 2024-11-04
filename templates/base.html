@@ -1,1 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Data Forensics System{% endblock %}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #333;
+            color: #fff;
+            padding: 5px;
+            text-align: center;
+            border-bottom: 3px solid #007bff;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #444;
+            padding: 10px 0;
+        }
+        nav a {
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+        nav a:hover {
+            background-color: #007bff;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-bottom: 100px;
+        }
+        .btn {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 5px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        .block {
+            border: 1px solid #333;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            font-family: Arial, sans-serif;
+            width: 48%; /* Display two blocks per row */
+            box-sizing: border-box;
+        }
+        .block .index {
+            font-weight: bold;
+        }
+        .blockchain-container {
+            display: flex;
+            flex-wrap: wrap; /* Makes blocks wrap to a new row after two blocks */
+            justify-content: space-between;
+        }
+        .table-container {
+            max-width: 100%;
+            overflow-x: auto; /* Adds a horizontal scrollbar if content overflows */
+            margin: 0 auto;
+            padding: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            max-width: 300px; /* Set a maximum width for each cell */
+            word-wrap: break-word; /* Allow word wrapping to prevent overflow */
+        }
+        /* Specific columns with wrap behavior for long text */
+        .filename-column {
+            white-space: normal;
+            word-wrap: break-word;
+            max-width: 250px; /* Set a max width to prevent overflow */
+        }
+        .hash-column {
+            white-space: normal;
+            word-wrap: break-word;
+            max-width: 300px;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<header class="header">
+    <h1>Data Forensics System</h1>
+</header>
+
+{% if show_nav is not defined or show_nav != false %}
+    <nav>
+    <!-- Navigation Menu -->
+        <div class="menu">
+            <a href="{{ url_for('upload') }}">UPLOAD</a>
+            <a href="{{ url_for('files') }}">PROCESSED</a>
+            <a href="{{ url_for('logs') }}">LOGS</a>
+            <a href="{{ url_for('validate_file_action') }}">VALIDATE</a>
+            <a href="{{ url_for('check_watermark_action') }}">WATERMARK</a>
+            <a href="{{ url_for('detect_anomalies') }}" target="_blank">ANOMALIES</a>
+            <a href="{{ url_for('blockchain_visualization') }}" target="_blank">BLOCKCHAIN</a>
+            <a href="{{ url_for('reset') }}">RESET</a>
+            <a href="{{ url_for('logout') }}">LOGOUT</a>
+        </div>
+    </nav>
+{% endif %}
+
+<div class="container">
+    {% block content %}{% endblock %}
+</div>
+<footer>
+    <p>© {{ datetime.now().year }}. wilfridus.handaya@gmail.com</p>
+</footer>
+</body>
+</html>
 

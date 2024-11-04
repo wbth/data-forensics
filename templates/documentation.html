@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Manual{% endblock %}
+{% block content %}
+<div class="container">
+    <h2>Manual</h2>
+    <p>This application is a <strong>Data Forensics System</strong> designed to assist in the analysis, management, and validation of digital files. It provides useful features for digital investigations, ensuring file security and authenticity.</p>
+    <p>Overall, this application functions as a comprehensive digital forensic tool with the security and audit features necessary for investigating digital files, ensuring data integrity, and tracking user activities.</p>
+
+    <h3>File Upload and Management</h3>
+    <ul>
+        <li>The application allows users to upload files (such as PDF, DOCX, PPTX, XLSX, images, and text).</li>
+        <li>Each uploaded file undergoes a hashing process to generate a unique hash code, which helps track file integrity.</li>
+    </ul>
+
+    <h3>Detailed Metadata Extraction</h3>
+    <ul>
+        <li>The application extracts metadata from uploaded files to obtain detailed information such as file size, timestamp, EXIF information (for images), and specific properties (like EXIF data for images and core properties for documents).</li>
+        <li>This metadata is stored in JSON and CSV formats for tracking and further analysis.</li>
+    </ul>
+
+    <h3>File Security and Validation</h3>
+    <ul>
+        <li>The system supports file integrity testing by comparing file hashes over time, ensuring files remain original and unmodified.</li>
+        <li>The application has a feature to add hidden watermarks to PDF files for additional identification and security.</li>
+    </ul>
+
+    <h3>Per-Page Validation for PDF</h3>
+    <ul>
+        <li>Each PDF file page can be analyzed separately to generate a per-page hash, which is useful for ensuring the integrity of individual pages in a digital investigation context.</li>
+    </ul>
+
+    <h3>Activity Tracking and Logging</h3>
+    <ul>
+        <li>The application logs every user activity, such as file uploads, downloads, and validations, as well as login and logout actions.</li>
+        <li>These logs are stored with timestamps and user IP addresses for auditing and monitoring purposes.</li>
+    </ul>
+
+    <h3>Using Blockchain for Secure Logging</h3>
+    <ul>
+        <li>Important activity logs are stored in a simple internal blockchain to ensure the log data cannot be altered, adding a layer of security to log storage.</li>
+    </ul>
+
+    <h3>File Validation Interface</h3>
+    <ul>
+        <li>The application provides a validation feature to compare new files with previously processed files, ensuring no changes or intrusions.</li>
+    </ul>
+
+    <h3>Secure Download and Deletion</h3>
+    <ul>
+        <li>Users can download processed files with download activity tracking.</li>
+        <li>Files can also be securely deleted using a secure delete method, ensuring that sensitive data cannot be recovered after deletion.</li>
+    </ul>
+
+    <h3>User-Friendly Interface</h3>
+    <ul>
+        <li>The application has a simple interface with clear navigation, allowing users to access main features like file uploads, activity logs, validation, and deletion.</li>
+    </ul>
+
+    <h3>Data Storage for Additional Analysis</h3>
+    <ul>
+        <li>Uploaded file metadata is stored in CSV format for additional analysis or to train AI models on metadata and usage patterns.</li>
+    </ul>
+
+</div>
+{% endblock %}
+
